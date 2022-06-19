@@ -109,7 +109,7 @@ void initGPUBuffers(void)
 
 
 }
-
+GLuint loc_vColor;
 void shaderSetup(void)
 {
 	// Nạp các shader và sử dụng chương trình shader
@@ -121,7 +121,7 @@ void shaderSetup(void)
 	glEnableVertexAttribArray(loc_vPosition);
 	glVertexAttribPointer(loc_vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 
-	GLuint loc_vColor = glGetAttribLocation(program, "vColor");
+	 loc_vColor = glGetAttribLocation(program, "vColor");
 	glEnableVertexAttribArray(loc_vColor);
 	glVertexAttribPointer(loc_vColor, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 
@@ -157,16 +157,46 @@ void shaderSetup(void)
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(1.0, 1.0, 1.0, 1.0);        /* Thiết lập màu trắng là màu xóa màn hình*/
 }
-mat4 ctm;
-int d = 0;
+
+
 mat4 tg;
 // bắt đầu phần đối tượng máy bay tàng hình của đông//
 
 void thanMay() {
-	ctm = tg * Scale(0.5, 0.5, 0.6);
-	glUniformMatrix4fv(model_loc, 1, GL_TRUE, ctm);
+	model = tg*Translate(-1.8,0,0) * Scale(1.0, 0.4, 0.3);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
 	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
-	glDrawArrays(GL_LINE_LOOP, 0, NumPoints);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void canhMay() {
+	model = tg * Translate(-1.7, -0.05, 0) * Scale(0.6, 0.1, 1.0);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void duoiMay() {
+	model = tg * Translate(-0.75, 0, -0.2) * Scale(0.5, 0.1, 1.0);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void canhQuat() {
+	model = tg * Translate(-1.40, 0, 0) * Scale(0.4, 0.1, 0.05);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void canh1() {
+	model = tg * RotateX(30) * Translate(-1.20, 0, 0) * Scale(0.05, 0.1, 0.4);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void canh2() {
+	model = tg *RotateX(30)* Translate(-1.20, 0, 0) * Scale(0.05, 0.4, 0.05);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 void planeOfDong() {
 
@@ -182,9 +212,19 @@ void display(void)
 	const vec3 viewer_pos(0.0, 0.0, 2.0);  /*Trùng với eye của camera*/
 
 	thanMay();
+	canhMay();
+	canhQuat();
+	canh2();
+	canh1();
 	glutSwapBuffers();
 }
-
+int d = 0;
+void sprin(int n) {
+	d = d + n;
+	tg = RotateY(d);
+	if (d > 360)d = -360;
+	glutPostRedisplay();
+}
 void reshape(int width, int height)
 {
 	vec4 eye(0, 0, 2, 1);
@@ -208,15 +248,15 @@ void keyboard(unsigned char key, int x, int y)
 		exit(1);		// quit program
 		break;
 	case 'x':
-		model *= RotateX(dr);
+		sprin(5);
 		glutPostRedisplay();
 		break;
 	case 'X':
-		model *= RotateX(-dr);
+		tg = RotateX(-dr);
 		glutPostRedisplay();
 		break;
 	case 'y':
-		model *= RotateY(dr);
+		tg = RotateY(dr);
 		glutPostRedisplay();
 		break;
 	case 'Y':

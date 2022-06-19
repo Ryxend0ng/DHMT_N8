@@ -1,6 +1,18 @@
 ﻿  main.cpp
-D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(134,41): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(139,44): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(140,45): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(166,32): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
-  OpenGL.vcxproj -> D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\Debug\OpenGL.exe
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(134,41): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(139,44): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(140,45): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(166,31): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(166,54): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(172,39): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(172,62): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(178,39): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(178,62): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(184,36): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(184,60): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(190,50): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(190,74): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(196,48): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(196,73): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+D:\DHMT\BTL_Nhom8\BTL_N8\OpenGL\main.cpp(224,15): warning C4244: 'argument': conversion from 'int' to 'const GLfloat', possible loss of data
+  OpenGL.vcxproj -> D:\DHMT\BTL_Nhom8\BTL_N8\Debug\OpenGL.exe
