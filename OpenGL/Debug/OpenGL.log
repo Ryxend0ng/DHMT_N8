@@ -1,0 +1,6 @@
+﻿  main.cpp
+D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(134,41): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(139,44): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(140,45): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\OpenGL\main.cpp(166,32): warning C4305: 'argument': truncation from 'double' to 'const GLfloat'
+  OpenGL.vcxproj -> D:\DHMT\BTL_Nhom8\BaiTH8_Hinhlapphuong_chieusang\Debug\OpenGL.exe
