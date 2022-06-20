@@ -203,19 +203,171 @@ void planeOfDong() {
 }
 
 // kết thúc phần đối tượng máy bay tàng hình của đông//
+// 
+// 
+//Phan cua chính ( máy bay trực thăng)
+mat4 c_cmt = 1;
+mat4 c_tg = 1;
+void c_dauMB() {
+	c_cmt = c_tg *Translate(0,0,0)*Scale(0.5,0.5,0.5);
+	color4 light_diffuse(0, 0.5, 1.0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_thanMB() {
+	c_cmt = c_tg * Translate(0, 0, -0.45) * Scale(0.2, 0.2, 1);
+	color4 light_diffuse(0.5, 0.5, 1.0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_trucduoiMB() {
+	c_cmt = c_tg * Translate(0, 0.1, -0.9) * Scale(0.1, 0.3, 0.1);
+	color4 light_diffuse(0, 0.5, 1.0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_duoiMB() {
+	c_trucduoiMB();
+	c_cmt = c_tg * Translate(0, 0.25, -0.9) * Scale(0.5, 0.05, 0.1);
+	color4 light_diffuse(0, 0.5, 1.0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_trucquatMB() {
+	c_cmt = c_tg * Translate(0, 0.2, 0) * Scale(0.1, 0.5, 0.1);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+int qy = 0;
 
+void c_canhquatMB(float ca, float cb, float cc,int cd) {
+	mat4 c_tgq = RotateY(qy);
+	c_cmt = c_tg*c_tgq*RotateY(cd) * Translate(ca, cb, cc) * Scale(0.5, 0.02, 0.1);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+int co = 0;
+int bay = 0;
+float by = 0;
+float bz = 0;
+void quaytudong(int) {
+	qy += 8;
+	if (co == 0) {
+		glutPostRedisplay();
+		glutTimerFunc(1000 / 60, quaytudong, 0);
+	}
+	
+}
+void baytudong(int) {
+	if (bay >= 3&&by<0.4) {
+		by += 0.05;
+		c_tg =Translate(0, by * by + by, by)*c_tg ;
+		glutPostRedisplay();
+		glutTimerFunc(1000/2 , baytudong, 0);
+	}
+	if (by > 0.39) {
+			c_tg =c_tg*RotateY(180) ;
+				if (bz < 0.4) {
+					bz += 0.02;
+					c_tg = Translate(0, 0, -bz) * c_tg;
+					glutPostRedisplay();
+					glutTimerFunc(1000 / 2, baytudong, 0);
+				}
+	}
+	if (bz > 0.39) {
+		c_tg = Translate(0,0,0);
+	}
+}
+void c_trucchanMB(float ca, float cb, float cc) {
+	c_cmt = c_tg * Translate(ca, cb, cc) * Scale(0.05, 0.3, 0.05);
+	color4 light_diffuse(0.2, 0.2, 0.5, 1);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_quatMB() {
+	c_canhquatMB(0.25, 0.45, 0,10);
+	c_canhquatMB(0.25, 0.45, 0, 130);
+	c_canhquatMB(0.25, 0.45, 0, 250);
+}
+void c_chan(float ca, float cb, float cc) {
+	c_cmt = c_tg  * Translate(ca, cb, cc) * Scale(0.1, 0.02, 0.5);
+	color4 light_diffuse(0.5, 0, 0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void c_chanMB() {
+	c_trucchanMB(0.15, -0.35, 0);
+	c_trucchanMB(-0.15, -0.35, 0);
+	c_chan(0.15, -0.5, 0);
+	c_chan(-0.15, -0.5, 0);
+}
+
+void maybayTT() {
+	c_thanMB();
+	c_duoiMB();
+	c_trucquatMB();
+	c_quatMB();
+	c_chanMB();
+	c_dauMB();
+}
+
+
+//het phan model cua chinh
+float ax = 0, ay = 0, az = 2;
 void display(void)
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	const vec3 viewer_pos(0.0, 0.0, 2.0);  /*Trùng với eye của camera*/
-
+	maybayTT();
 	thanMay();
 	canhMay();
 	canhQuat();
 	canh2();
 	canh1();
+	//ca me ra
+	vec4 eye(ax, ay, az, 1);
+	vec4 at(0, 0, 0, 1);
+	vec4 up(0, 1, 0, 1);
+	view = LookAt(eye, at, up);
+	glUniformMatrix4fv(view_loc, 1, GL_TRUE, view);
+	projection = Frustum(-2, 2, -2, 2, 1, 5);
+	glUniformMatrix4fv(projection_loc, 1, GL_TRUE, projection);
 	glutSwapBuffers();
 }
 int d = 0;
@@ -224,20 +376,6 @@ void sprin(int n) {
 	tg = RotateY(d);
 	if (d > 360)d = -360;
 	glutPostRedisplay();
-}
-void reshape(int width, int height)
-{
-	vec4 eye(0, 0, 2, 1);
-	vec4 at(0, 0, 0, 1);
-	vec4 up(0, 1, 0, 1);
-
-	view = LookAt(eye, at, up);
-	glUniformMatrix4fv(view_loc, 1, GL_TRUE, view);
-
-	projection = Frustum(-1, 1, -1, 1, 1, 4);
-	glUniformMatrix4fv(projection_loc, 1, GL_TRUE, projection);
-
-	glViewport(0, 0, width, height);
 }
 void keyboard(unsigned char key, int x, int y)
 {
@@ -271,7 +409,56 @@ void keyboard(unsigned char key, int x, int y)
 		model *= RotateZ(-dr);
 		glutPostRedisplay();
 		break;
+		// chinh them
+	case '1':
+		ax += 0.2;
+		glutPostRedisplay();
+		break;
+	case '2':
+		ax -= 0.2;
+		glutPostRedisplay();
+		break;
+	case '3':
+		ay += 0.2;
+		glutPostRedisplay();
+		break;
+	case '4':
+		ay -= 0.2;
+		glutPostRedisplay();
+		break;
+	case '5':
+		az += 0.2;
+		glutPostRedisplay();
+		break;
+	case '6':
+		az -= 0.2;
+		glutPostRedisplay();
+		break;
+	case 'q':
+		co = 0;
+		bay++;
+		quaytudong(0);
+		baytudong(0);
+		break;
+	case 'b':
+		baytudong(0);
+		break;
+	case 'Q':
+		co = 1;
+		glutPostRedisplay();
+		break;
+	case 'r':
+		ax = 1;
+		az = 0;
+		glutPostRedisplay();
+		break;
+
+	// het cua chinh
 	}
+	
+
+
+
 }
 
 
@@ -292,8 +479,6 @@ int main(int argc, char **argv)
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
-	glutReshapeFunc(reshape);
-
 	glutMainLoop();
 	return 0;
 }
