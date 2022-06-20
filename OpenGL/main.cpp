@@ -160,49 +160,120 @@ void shaderSetup(void)
 
 
 mat4 tg;
-// bắt đầu phần đối tượng máy bay tàng hình của đông//
+// bắt đầu phần đối tượng máy bay  của đông//
 
+float k = 0.0f;
+mat4 tgk = 1;
+
+int d = 0;
+void sprin(int n) {
+	d = d + n;
+	tg = RotateY(d);
+	if (d > 360)d = -360;
+	glutPostRedisplay();
+}
+void tienLenD(float d2) {
+	k = k + d2;
+	d = d + 5;
+	tgk = Translate(k, 0, 0);
+	if (k > 2.0) k = 2.0;
+		glutPostRedisplay();
+}
+int D_co = 0;
+int D_qy = 0;
+mat4 tgqd = 1;
+void D_quaytudong(int) {
+	D_qy += 8;
+	if (D_co == 0) {
+		glutPostRedisplay();
+		glutTimerFunc(1000 / 60, D_quaytudong, 0);
+	}
+
+}
+void D_BayLen(float d2) {
+	k = k + d2;
+	tgk = Translate(0, k, 0);
+	if (k > 2.0) k = 2.0;
+	glutPostRedisplay();
+
+}
 void thanMay() {
-	model = tg*Translate(-1.8,0,0) * Scale(1.0, 0.4, 0.3);
+	model = tgk * tg * Translate(-1.8, 0, 0) * Scale(0.8, 0.4, 0.3);
 	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
-	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 void canhMay() {
-	model = tg * Translate(-1.7, -0.05, 0) * Scale(0.6, 0.1, 1.0);
-	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
-	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-void duoiMay() {
-	model = tg * Translate(-0.75, 0, -0.2) * Scale(0.5, 0.1, 1.0);
-	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
-	//glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-void canhQuat() {
-	model = tg * Translate(-1.40, 0, 0) * Scale(0.4, 0.1, 0.05);
+	model = tgk * tg * Translate(-1.7, -0.05, 0) * Scale(0.3, 0.1, 1.0);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
 	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
 	glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
+void duoiMay() {
+	model = tgk * tg * Translate(-2.185, 0.30, 0) * Scale(0.1, 0.5, 0.05);
+	color4 light_diffuse(0, 0.5, 1.0, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void duoiMayDuoi() {
+	model = tgk * tg * Translate(-2.2, 0.15, 0) * Scale(0.2, 0.1, 0.2);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor,1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+void canhQuat() {
+	
+	model = tgk * tg * Translate(-1.5, 0, 0) * Scale(0.4, 0.1, 0.05);
+	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
+	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
 void canh1() {
-	model = tg * RotateX(30) * Translate(-1.20, 0, 0) * Scale(0.05, 0.1, 0.4);
+	tgqd = RotateX(D_qy);
+	model = tgk* tgqd* tg * RotateX(30) * Translate(-1.3, 0, 0) * Scale(0.05, 0.1, 0.4);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
 	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
 	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 void canh2() {
-	model = tg *RotateX(30)* Translate(-1.20, 0, 0) * Scale(0.05, 0.4, 0.05);
+	tgqd = RotateX(D_qy);
+	model = tgk * tgqd*  tg * RotateX(30) * Translate(-1.3, 0, 0) * Scale(0.05, 0.4, 0.05);
+	color4 light_diffuse(0.5, 0, 0.5, 1.0);
+	color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	color4 diffuse_product = light_diffuse * material_diffuse;
+	glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
 	glUniformMatrix4fv(model_loc, 1, GL_TRUE, model);
 	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
-void planeOfDong() {
 
+void planeOfDong() {
+	thanMay();
+	canhMay();
+	canhQuat();
+	canh2();
+	canh1();
+	duoiMay();
+	duoiMayDuoi();
 }
 
-// kết thúc phần đối tượng máy bay tàng hình của đông//
+// kết thúc phần đối tượng máy bay  của đông//
 // 
 // 
 //Phan cua chính ( máy bay trực thăng)
@@ -227,6 +298,7 @@ void c_thanMB() {
 	glUniformMatrix4fv(model_loc, 1, GL_TRUE, c_cmt);
 	glVertexAttribPointer(loc_vColor, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
+	
 }
 void c_trucduoiMB() {
 	c_cmt = c_tg * Translate(0, 0.1, -0.9) * Scale(0.1, 0.3, 0.1);
@@ -355,11 +427,7 @@ void display(void)
 
 	const vec3 viewer_pos(0.0, 0.0, 2.0);  /*Trùng với eye của camera*/
 	maybayTT();
-	thanMay();
-	canhMay();
-	canhQuat();
-	canh2();
-	canh1();
+	planeOfDong();
 	//ca me ra
 	vec4 eye(ax, ay, az, 1);
 	vec4 at(0, 0, 0, 1);
@@ -370,13 +438,7 @@ void display(void)
 	glUniformMatrix4fv(projection_loc, 1, GL_TRUE, projection);
 	glutSwapBuffers();
 }
-int d = 0;
-void sprin(int n) {
-	d = d + n;
-	tg = RotateY(d);
-	if (d > 360)d = -360;
-	glutPostRedisplay();
-}
+
 void keyboard(unsigned char key, int x, int y)
 {
 	// keyboard handler
@@ -385,28 +447,39 @@ void keyboard(unsigned char key, int x, int y)
 	case 033:			// 033 is Escape key octal value
 		exit(1);		// quit program
 		break;
-	case 'x':
+	case 'c':
 		sprin(5);
 		glutPostRedisplay();
 		break;
 	case 'X':
-		tg = RotateX(-dr);
+		tienLenD(0.1);
+		D_quaytudong(0);
 		glutPostRedisplay();
 		break;
 	case 'y':
-		tg = RotateY(dr);
+		tienLenD(-0.1);
+		D_quaytudong(0);
 		glutPostRedisplay();
 		break;
 	case 'Y':
-		model *= RotateY(-dr);
+		D_co = 0;
+		D_quaytudong(0);
 		glutPostRedisplay();
 		break;
 	case 'z':
-		model *= RotateZ(dr);
+		D_co = 1;
 		glutPostRedisplay();
 		break;
 	case 'Z':
-		model *= RotateZ(-dr);
+		D_co = 0;
+		D_BayLen(0.1);
+		D_quaytudong(0);
+		glutPostRedisplay();
+		break;
+	case 'v':
+		D_co = 0;
+		D_BayLen(-0.1);
+		D_quaytudong(0);
 		glutPostRedisplay();
 		break;
 		// chinh them
